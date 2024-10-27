@@ -12,6 +12,9 @@ public class Main {
         System.out.println("hello");
         int[][] board = makeBoard(8);
         outputBoard(board);
+        System.out.println();
+        board = changeBoard(board, 1, 2, 2);
+        outputBoard(board);
     }
 
     //8×8のマス目を作る
@@ -32,6 +35,25 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    //指定の位置の状態を変える
+    //xは左から何番目か
+    //yは上から何番目か
+    public static int[][] changeBoard(int[][] board, int x, int y ,int color){
+        int xIndex = x-1;
+        int yIndex = y-1;
+        switch (color) {
+            case 1:
+            board[yIndex][xIndex] = 1;
+                break;
+            case 2:
+            board[yIndex][xIndex] = 2;
+                break;
+            default:
+                break;
+        }
+        return board;
     }
 }
 
