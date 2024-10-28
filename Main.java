@@ -14,6 +14,7 @@ public class Main {
         outputBoard(board);
         System.out.println();
         board = changeBoard(board, 4, 4, 2);
+        board = changeBoard(board, 5, 5, 1);
         outputBoard(board);
     }
 
