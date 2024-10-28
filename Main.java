@@ -13,7 +13,7 @@ public class Main {
         int[][] board = makeBoard(8);
         outputBoard(board);
         System.out.println();
-        board = changeBoard(board, 1, 2, 2);
+        board = changeBoard(board, 4, 4, 2);
         outputBoard(board);
     }
 
