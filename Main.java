@@ -76,7 +76,7 @@ public class Main {
         int xIndex = x-1;
         int yIndex = y-1;
         int color = board[yIndex][xIndex];
-        System.out.println(color);
+        //System.out.println(color);
         if(color == 0){
             return true;
         }else{
