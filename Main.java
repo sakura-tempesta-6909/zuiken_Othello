@@ -12,7 +12,8 @@ public class Main {
         int[][] board = makeBoard(8);
         board = setBoard(board);
         outputBoard(board);
-        System.out.println(canPut(board, 3, 4));
+        board = changeBoard(board, 5, 4, 1);
+        outputBoard(board);
     }
 
     //8×8のマス目を作る
@@ -54,15 +55,19 @@ public class Main {
     public static int[][] changeBoard(int[][] board, int x, int y ,int color){
         int xIndex = x-1;
         int yIndex = y-1;
-        switch (color) {
-            case 1:
-            board[yIndex][xIndex] = 1;
-                break;
-            case 2:
-            board[yIndex][xIndex] = 2;
-                break;
-            default:
-                break;
+        if(canPut(board, x, y)){
+            switch (color) {
+                case 1:
+                board[yIndex][xIndex] = 1;
+                    break;
+                case 2:
+                board[yIndex][xIndex] = 2;
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            System.out.println("そこにはおけません");
         }
         return board;
     }
