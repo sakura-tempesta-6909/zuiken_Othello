@@ -12,6 +12,7 @@ public class Main {
         int[][] board = makeBoard(8);
         board = setBoard(board);
         outputBoard(board);
+        System.out.println(canPut(board, 3, 4));
     }
 
     //8×8のマス目を作る
@@ -64,6 +65,18 @@ public class Main {
                 break;
         }
         return board;
+    }
+
+    public static boolean canPut(int [][] board,int x,int y){
+        int xIndex = x-1;
+        int yIndex = y-1;
+        int color = board[yIndex][xIndex];
+        System.out.println(color);
+        if(color == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 
