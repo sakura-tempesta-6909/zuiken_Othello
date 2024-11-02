@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 //空白: 0
 //白　: 1
@@ -9,18 +10,25 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String [] args){
+        Scanner sc = new Scanner(System.in);
         int[][] board = makeBoard(8);
         board = setBoard(board);
         outputBoard(board);
-        //System.out.println("");
-        int x = 5;
-        int y = 4;
+
+        System.out.print("x = ");
+        int x = sc.nextInt();
+        System.out.print("y = ");
+        int y = sc.nextInt();
+
         if(canPut(board, x, y)){
             board = changeBoard(board, x, y, 1); 
         }else{
             System.out.println("そこにはおけません");
         }
+
         outputBoard(board);
+
+        sc.close();
     }
 
     //8×8のマス目を作る
