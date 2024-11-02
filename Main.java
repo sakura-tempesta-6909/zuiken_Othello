@@ -9,12 +9,8 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String [] args){
-        System.out.println("hello");
         int[][] board = makeBoard(8);
-        outputBoard(board);
-        System.out.println();
-        board = changeBoard(board, 4, 4, 2);
-        board = changeBoard(board, 5, 5, 1);
+        board = setBoard(board);
         outputBoard(board);
     }
 
@@ -25,6 +21,19 @@ public class Main {
             Arrays.fill(column, 0); //すべてのマスを0で埋める(配列定義時はすべて0だからいらない気もするが一応)
         }
         return boared;
+    }
+
+    //真ん中に対角線状に白と黒が置いてある初期状態にする
+    public static int[][] setBoard(int[][] board){
+        int size = board.length;
+        int center = size/2;
+
+        board = changeBoard(board, center, center, 1);
+        board = changeBoard(board, center+1, center+1, 1);
+        board = changeBoard(board, center, center+1,2 );
+        board = changeBoard(board, center+1, center, 2);
+
+        return board;
     }
 
     //オセロの譜面の二次元配列を出力する
