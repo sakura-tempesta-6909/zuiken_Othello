@@ -12,7 +12,14 @@ public class Main {
         int[][] board = makeBoard(8);
         board = setBoard(board);
         outputBoard(board);
-        board = changeBoard(board, 5, 4, 1);
+        //System.out.println("");
+        int x = 5;
+        int y = 4;
+        if(canPut(board, x, y)){
+            board = changeBoard(board, x, y, 1); 
+        }else{
+            System.out.println("そこにはおけません");
+        }
         outputBoard(board);
     }
 
@@ -47,6 +54,7 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println(""); //2個の譜面が縦に繋がって見えにくいから間を空けるため
     }
 
     //指定の位置の状態を変える
@@ -55,20 +63,16 @@ public class Main {
     public static int[][] changeBoard(int[][] board, int x, int y ,int color){
         int xIndex = x-1;
         int yIndex = y-1;
-        if(canPut(board, x, y)){
-            switch (color) {
-                case 1:
+        switch (color) {
+            case 1:
                 board[yIndex][xIndex] = 1;
-                    break;
-                case 2:
+                break;
+            case 2:
                 board[yIndex][xIndex] = 2;
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
             }
-        }else{
-            System.out.println("そこにはおけません");
-        }
         return board;
     }
 
