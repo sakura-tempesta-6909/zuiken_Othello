@@ -36,6 +36,8 @@ public class Main {
             System.out.println("そこにはおけません");
         }
 
+        System.out.println(canChangeDirection(board, xIndex, yIndex, "ri"));
+        board = changeDirection(board, xIndex, yIndex, "ri");
         outputBoard(board);
 
         sc.close();
@@ -171,6 +173,7 @@ public class Main {
         return place;
     }
 
+    //置いた場所の周りを探索→自分と違うコマがある方向を返す
     public static String[] searchChangeDirections(int[][] board,int x,int y){
         int color = board[y][x];
         String[] directions = {"ul","up","ur","le","ri","dl","do","dr"};
@@ -189,6 +192,65 @@ public class Main {
             }
         }
         return enemyDirection;
+    }
+
+    //引数に指定した方向を探索→ひっくり返せるものがあるか
+    public static boolean canChangeDirection(int[][] board,int x,int y,String direction){
+        int color = board[y][x];
+        int enemyColor;
+        if(color == 1){
+            enemyColor = 2;
+        }else{
+            enemyColor = 1;
+        }
+        while(true){
+            int[] nextPlace = getNext(board, x, y, direction);
+            int nextX = nextPlace[0];
+            int nextY = nextPlace[1];
+            if(inBoardRange(nextX, nextY)){
+                int nextColor = board[nextY][nextX];
+                if(nextColor == enemyColor){
+                    x = nextX;
+                    y = nextY;
+                    continue;
+                }else if(nextColor == color){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public static int[][] changeDirection(int[][] board,int x,int y,String direction){
+        int color = board[y][x];
+        int enemyColor;
+        if(color == 1){
+            enemyColor = 2;
+        }else{
+            enemyColor = 1;
+        }
+        while(true){
+            int[] nextPlace = getNext(board, x, y, direction);
+            int nextX = nextPlace[0];
+            int nextY = nextPlace[1];
+            if(inBoardRange(nextX, nextY)){
+                int nextColor = board[nextY][nextX];
+                if(nextColor == enemyColor){
+                    board = changeBoard(board, nextX, nextY, color);
+                    x = nextX;
+                    y = nextY;
+                    continue;
+                }else if(nextColor == color){
+                    break;
+                }else{
+                    break;
+                }
+            }
+        }
+    return board;
     }
 }
 
