@@ -14,6 +14,10 @@ public class Main {
         int[][] board = makeBoard(8);
         board = setBoard(board);
         
+        //ひっくり返せるかテストするためあらかじめここにコマを置く
+        board = changeBoard(board, 4, 1, 2);
+        board = changeBoard(board, 4, 2, 2);
+
         outputBoard(board);
 
         System.out.print("x = ");
@@ -36,8 +40,9 @@ public class Main {
             System.out.println("そこにはおけません");
         }
 
-        System.out.println(canChangeDirection(board, xIndex, yIndex, "ri"));
-        board = changeDirection(board, xIndex, yIndex, "ri");
+        System.out.println(canChangeDirection(board, xIndex, yIndex, "do"));
+        board = changeDirection(board, xIndex, yIndex, "do");
+
         outputBoard(board);
 
         sc.close();
@@ -184,11 +189,14 @@ public class Main {
 
             int aroundX = aroundPlace[0];
             int aroundY = aroundPlace[1];
-            int aroundColor = board[aroundY][aroundX];
-            
-            if(aroundColor != color && aroundColor != 0){
-                enemyDirection[index] = direction;
-                index += 1;
+            if(inBoardRange(aroundX, aroundY)){
+                int aroundColor = board[aroundY][aroundX];
+                if(aroundColor != color && aroundColor != 0){
+                    enemyDirection[index] = direction;
+                    index += 1;
+                }
+            }else{
+                continue;
             }
         }
         return enemyDirection;
@@ -224,6 +232,7 @@ public class Main {
         }
     }
 
+    //canChangeDirectionと同じ感じで探索してひっくり返す
     public static int[][] changeDirection(int[][] board,int x,int y,String direction){
         int color = board[y][x];
         int enemyColor;
