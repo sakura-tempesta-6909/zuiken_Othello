@@ -90,16 +90,30 @@ public class Main {
         return board;
     }
 
-    //指定したインデックスの場所におけるかを確認する
-    public static boolean canPut(int [][] board,int x,int y){
-        int color = board[y][x];
-        //System.out.println(color);
-        if(color == 0){
-            return true;
-        }else{
-            return false;
+    //入力された値がボードの範囲内であるか確認する
+    public static boolean inBoardRange(int x,int y){
+        if(0 <= x && x <= 7){
+            if(0 <= y && y <= 7){
+                return true;
+            }
         }
+        System.out.println("ボードの範囲においてください");
+        return false;
     }
+
+    //指定したインデックスの場所におけるかを確認する
+    public static boolean canPut(int[][] board,int x,int y){
+        if(inBoardRange(x, y)){        //ボードの範囲内かを確認する
+            int color = board[y][x];
+            if(color == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
+
 
     //directionに指定した方向の横のコマの座標をインデックスで返す
     //方向の指定方法
