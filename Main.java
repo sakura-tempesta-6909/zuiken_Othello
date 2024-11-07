@@ -25,16 +25,18 @@ public class Main {
         int yIndex = y-1;
 
         if(canPut(board, xIndex, yIndex)){
-            board = changeBoard(board, xIndex, yIndex, 1); 
+            board = changeBoard(board, xIndex, yIndex, 1);
+            String[] enemyDirection = searchChangeDirections(board, xIndex, yIndex);
+            for(String i:enemyDirection){
+                System.out.print(i);
+                System.out.print(" ");
+            }
+            System.out.println(); 
         }else{
             System.out.println("そこにはおけません");
         }
 
         outputBoard(board);
-
-        int[] place = getNext(board, xIndex, yIndex, "dl");
-        System.out.print(place[0]);
-        System.out.println(place[1]);
 
         sc.close();
     }
@@ -167,6 +169,26 @@ public class Main {
         place[0] = nextX;
         place[1] = nextY;
         return place;
+    }
+
+    public static String[] searchChangeDirections(int[][] board,int x,int y){
+        int color = board[y][x];
+        String[] directions = {"ul","up","ur","le","ri","dl","do","dr"};
+        String[] enemyDirection = new String[8];
+        int index = 0;
+        for(String direction:directions){
+            int[] aroundPlace = getNext(board, x, y, direction);
+
+            int aroundX = aroundPlace[0];
+            int aroundY = aroundPlace[1];
+            int aroundColor = board[aroundY][aroundX];
+            
+            if(aroundColor != color && aroundColor != 0){
+                enemyDirection[index] = direction;
+                index += 1;
+            }
+        }
+        return enemyDirection;
     }
 }
 
