@@ -13,6 +13,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int[][] board = makeBoard(8);
         board = setBoard(board);
+        
         outputBoard(board);
 
         System.out.print("x = ");
@@ -30,6 +31,10 @@ public class Main {
         }
 
         outputBoard(board);
+
+        int[] place = getNext(board, xIndex, yIndex, "dl");
+        System.out.print(place[0]);
+        System.out.println(place[1]);
 
         sc.close();
     }
@@ -85,9 +90,10 @@ public class Main {
         return board;
     }
 
+    //指定したインデックスの場所におけるかを確認する
     public static boolean canPut(int [][] board,int x,int y){
         int color = board[y][x];
-        System.out.println(color);
+        //System.out.println(color);
         if(color == 0){
             return true;
         }else{
@@ -101,9 +107,52 @@ public class Main {
     // le 的 ri
     // dl do dr 
     public static int[] getNext(int[][] board,int x,int y,String direction){
-        int xIndex = x - 1;
-        int yIndex = y - 1;
-        return 
+        int [] place = new int[2];
+        //有効でない数字が入力されたらboardの範囲外である-1が返されるようになっている
+        //(正直無理やりな気もするが他にいい方法が思いつかなかった)
+        int nextX = -1; 
+        int nextY = -1;
+        switch (direction) {
+            case "up":
+                nextY = y-1;
+                nextX = x;
+                break;
+            case "do":
+                nextY = y+1;
+                nextX = x;
+                break;
+            case "le":
+                nextX = x-1;
+                nextY = y;
+                break;
+            case "ri":
+                nextX = x+1;
+                nextY = y;
+                break;
+            case "ul":
+                nextX = x-1;
+                nextY = y-1;
+                break;
+            case "ur":
+                nextX = x+1;
+                nextY = y-1;
+                break;
+            case "dr":
+                nextX = x+1;
+                nextY = y+1;
+                break;
+            case "dl":
+                nextX = x-1;
+                nextY = y+1;
+                break;
+            default:
+                System.out.println("有効な方向を引数に入れてください");
+                break;
+        }
+
+        place[0] = nextX;
+        place[1] = nextY;
+        return place;
     }
 }
 
