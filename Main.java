@@ -15,7 +15,8 @@ public class Main {
         board = setBoard(board);
         
         //ひっくり返せるかテストするためあらかじめここにコマを置く
-        board = testBoard1(board);
+        //board = testBoard1(board);
+        board = testBoard2(board);
 
         outputBoard(board);
 
@@ -39,8 +40,11 @@ public class Main {
             System.out.println("そこにはおけません");
         }
 
-        System.out.println(canChangeDirection(board, xIndex, yIndex, "do"));
-        board = changeDirection(board, xIndex, yIndex, "do");
+        //System.out.println(canChangeDirection(board, xIndex, yIndex, "do"));
+        //board = changeDirection(board, xIndex, yIndex, "do");
+
+        System.out.println(canChangeDirection(board, xIndex, yIndex, "ur"));
+        board = changeDirection(board, xIndex, yIndex, "ur");
 
         outputBoard(board);
 
@@ -72,6 +76,13 @@ public class Main {
     public static int[][] testBoard1(int[][] board){
         board = changeBoard(board, 4, 1, 2);
         board = changeBoard(board, 4, 2, 2);
+        return board;
+    }
+
+    public static int[][] testBoard2(int[][] board){
+        board = changeBoard(board, 4, 3, 1);
+        board = changeBoard(board, 2, 5, 2);
+        board = changeBoard(board, 1, 6, 2);
         return board;
     }
 
