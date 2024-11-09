@@ -15,8 +15,7 @@ public class Main {
         board = setBoard(board);
         
         //ひっくり返せるかテストするためあらかじめここにコマを置く
-        board = changeBoard(board, 4, 1, 2);
-        board = changeBoard(board, 4, 2, 2);
+        board = testBoard1(board);
 
         outputBoard(board);
 
@@ -67,6 +66,12 @@ public class Main {
         board = changeBoard(board, center-1, center,2 );
         board = changeBoard(board, center, center-1, 2);
 
+        return board;
+    }
+
+    public static int[][] testBoard1(int[][] board){
+        board = changeBoard(board, 4, 1, 2);
+        board = changeBoard(board, 4, 2, 2);
         return board;
     }
 
