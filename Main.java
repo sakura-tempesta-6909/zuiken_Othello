@@ -10,29 +10,31 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String [] args){
-  
+        int nextColor = 1;
         int[][] board = makeBoard(8);
         board = setBoard(board);
-        
-        //ひっくり返せるかテストするためあらかじめここにコマを置く
-        //board = testBoard1(board);
-        board = testBoard1(board);
 
         outputBoard(board);
 
-        int[] place = hearPlace();
+        while(true){
+            int nowColor = nextColor;
+            System.out.println("今は"+nextColor+"のターンです"); //もちろん分かりやすいメッセージに変えます
+            int[] place = hearPlace();
+            int xIndex = place[0];
+            int yIndex = place[1];
 
-        int xIndex = place[0];
-        int yIndex = place[1];
+            if(canPut(board, xIndex, yIndex)){   //今のcanputはひっくり返せる場所か判断できないので追加します
+                board = changeBoard(board, xIndex, yIndex, nowColor);
+                board = turnOverAll(board, xIndex, yIndex);
+            }else{
+                System.out.println("そこにはおけません");
+            }
+    
+            outputBoard(board);
 
-        if(canPut(board, xIndex, yIndex)){
-            board = changeBoard(board, xIndex, yIndex, 1);
-            board = turnOverAll(board, xIndex, yIndex);
-        }else{
-            System.out.println("そこにはおけません");
+            nextColor = nextColor(nowColor);
         }
 
-        outputBoard(board);
     }
 
     //座標を入力させる
@@ -46,7 +48,7 @@ public class Main {
         int xIndex = x-1;
         int yIndex = y-1;
         int[] place = {xIndex,yIndex};
-        sc.close();
+        //sc.close(); なぜか動かなくなるから消した理由は知らん
         return place;
     }
     //8×8のマス目を作る
@@ -285,6 +287,19 @@ public class Main {
             }
         }
         return board;
+    }
+
+    public static int nextColor(int oldColor){
+        int newColor;
+        if(oldColor == 1){
+            newColor = 2;
+        }else if(oldColor == 2){
+            newColor = 1;
+        }else{
+            newColor = 0;
+            System.out.println("oldColorにおかしい数が入ってるよ");
+        }
+        return newColor;
     }
 }
 
