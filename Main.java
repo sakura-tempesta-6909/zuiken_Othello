@@ -10,16 +10,34 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String [] args){
-        Scanner sc = new Scanner(System.in);
+  
         int[][] board = makeBoard(8);
         board = setBoard(board);
         
         //ひっくり返せるかテストするためあらかじめここにコマを置く
         //board = testBoard1(board);
-        board = testBoard2(board);
+        board = testBoard1(board);
 
         outputBoard(board);
 
+        int[] place = hearPlace();
+
+        int xIndex = place[0];
+        int yIndex = place[1];
+
+        if(canPut(board, xIndex, yIndex)){
+            board = changeBoard(board, xIndex, yIndex, 1);
+            board = turnOverAll(board, xIndex, yIndex);
+        }else{
+            System.out.println("そこにはおけません");
+        }
+
+        outputBoard(board);
+    }
+
+    //座標を入力させる
+    public static int[] hearPlace(){
+        Scanner sc = new Scanner(System.in);
         System.out.print("x = ");
         int x = sc.nextInt();
         System.out.print("y = ");
@@ -27,30 +45,10 @@ public class Main {
 
         int xIndex = x-1;
         int yIndex = y-1;
-
-        if(canPut(board, xIndex, yIndex)){
-            board = changeBoard(board, xIndex, yIndex, 1);
-            String[] enemyDirection = searchChangeDirections(board, xIndex, yIndex);
-            for(String i:enemyDirection){
-                System.out.print(i);
-                System.out.print(" ");
-            }
-            System.out.println(); 
-        }else{
-            System.out.println("そこにはおけません");
-        }
-
-        //System.out.println(canChangeDirection(board, xIndex, yIndex, "do"));
-        //board = changeDirection(board, xIndex, yIndex, "do");
-
-        System.out.println(canChangeDirection(board, xIndex, yIndex, "ur"));
-        board = changeDirection(board, xIndex, yIndex, "ur");
-
-        outputBoard(board);
-
+        int[] place = {xIndex,yIndex};
         sc.close();
+        return place;
     }
-
     //8×8のマス目を作る
     public static int[][] makeBoard(int size){
         int [][]boared = new int[size][size];
@@ -122,7 +120,7 @@ public class Main {
                 return true;
             }
         }
-        System.out.println("ボードの範囲においてください");
+        //System.out.println("ボードの範囲においてください");
         return false;
     }
 
@@ -248,7 +246,7 @@ public class Main {
         }
     }
 
-    //canChangeDirectionと同じ感じで探索してひっくり返す
+    //canChangeDirectionと同じ感じで探索してひっくり返す(一方向のみ対応)
     public static int[][] changeDirection(int[][] board,int x,int y,String direction){
         int color = board[y][x];
         int enemyColor;
@@ -276,6 +274,17 @@ public class Main {
             }
         }
     return board;
+    }
+
+    //裏返す(全方向対応)
+    public static int[][] turnOverAll(int[][] board,int x,int y){
+        String[] enemyDirection = searchChangeDirections(board, x, y);
+        for(String i:enemyDirection){
+            if(i != null && canChangeDirection(board, x, y, i)){
+                board = changeDirection(board, x, y, i);
+            }
+        }
+        return board;
     }
 }
 
