@@ -15,7 +15,7 @@ public class Main {
         int[][] board = makeBoard(8);
         board = setBoard(board);
 
-        outputBoard(board);
+        outputBoardCUI(board);
 
         while(true){
             int nowColor = nextColor;
@@ -75,11 +75,38 @@ public class Main {
         return board;
     }
 
-    //オセロの譜面の二次元配列を出力する
-    public static void outputBoard(int[][] boared){
-        for(int[] column:boared){
+    //オセロの譜面の二次元配列を出力する(数字状態)
+    public static void outputBoard(int[][] board){
+        for(int[] column:board){
             for(int i:column){
                 System.out.print(i);
+                System.out.print("　");//横がぎゅうぎゅうになって見にくいから
+            }
+            System.out.println();
+        }
+        System.out.println(""); //2個の譜面が縦に繋がって見えにくいから間を空けるため
+    }
+
+    //見やすく表示(作り途中)
+    public static void outputBoardCUI(int[][] board){
+        String white = "●";
+        String black= "○";
+        String space = "・";
+
+        for(int[] column:board){
+            for(int i:column){
+                switch (i) {
+                    case 1:
+                        System.out.print(white);
+                        break;
+                    case 2:
+                        System.out.print(black);
+                        break;
+                    case 0:
+                        System.out.print(space);
+                    default:
+                        break;
+                }
                 System.out.print("　");//横がぎゅうぎゅうになって見にくいから
             }
             System.out.println();
