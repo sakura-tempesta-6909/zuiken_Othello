@@ -9,6 +9,7 @@ import java.util.Scanner;
 //行: column
 
 public class Main {
+    private static final Scanner sc = new Scanner(System.in); // 1箇所で管理
     public static void main(String [] args){
         int nextColor = 1;
         int[][] board = makeBoard(8);
@@ -26,20 +27,21 @@ public class Main {
             if(canPut(board, xIndex, yIndex)){   //今のcanputはひっくり返せる場所か判断できないので追加します
                 board = changeBoard(board, xIndex, yIndex, nowColor);
                 board = turnOverAll(board, xIndex, yIndex);
+
+                nextColor = nextColor(nowColor);
             }else{
                 System.out.println("そこにはおけません");
+                nextColor = nowColor;   //置けなかったからもう一回
             }
     
             outputBoard(board);
-
-            nextColor = nextColor(nowColor);
         }
+        //sc.close();  while()が完成するまではコメント
 
     }
 
     //座標を入力させる
     public static int[] hearPlace(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("x = ");
         int x = sc.nextInt();
         System.out.print("y = ");
@@ -70,19 +72,6 @@ public class Main {
         board = changeBoard(board, center-1, center,2 );
         board = changeBoard(board, center, center-1, 2);
 
-        return board;
-    }
-
-    public static int[][] testBoard1(int[][] board){
-        board = changeBoard(board, 4, 1, 2);
-        board = changeBoard(board, 4, 2, 2);
-        return board;
-    }
-
-    public static int[][] testBoard2(int[][] board){
-        board = changeBoard(board, 4, 3, 1);
-        board = changeBoard(board, 2, 5, 2);
-        board = changeBoard(board, 1, 6, 2);
         return board;
     }
 
@@ -126,18 +115,24 @@ public class Main {
         return false;
     }
 
-    //指定したインデックスの場所におけるかを確認する
-    public static boolean canPut(int[][] board,int x,int y){
-        if(inBoardRange(x, y)){        //ボードの範囲内かを確認する
-            int color = board[y][x];
+    //何も置いていない位置か確認する
+    public static boolean notPlacedAnything(int[][] board,int x,int y){
+        int color = board[y][x];
             if(color == 0){
                 return true;
             }else{
                 return false;
             }
-        }
-        return false;
     }
+
+    //指定したインデックスの場所におけるかを確認する
+    public static boolean canPut(int[][] board,int x,int y){
+        if(inBoardRange(x, y) && notPlacedAnything(board, x, y)){        //ボードの範囲内かを確認する＋何も置いていない位置か確認する
+                return true;
+            }else{
+                return false;
+            }
+        }
 
 
     //directionに指定した方向の横のコマの座標をインデックスで返す
