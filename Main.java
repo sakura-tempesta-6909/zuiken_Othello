@@ -31,7 +31,7 @@ public class Main {
             }else{
                 color = "黒";
             }
-            System.out.println("今は"+color+"のターンです"); //もちろん分かりやすいメッセージに変えます
+            System.out.println("今は"+color+"のターンです"); //もちろん分かりやすいメッセージに変えます 追記変えました
             int[] place = hearPlace();
             int xIndex = place[0];
             int yIndex = place[1];
@@ -170,7 +170,7 @@ public class Main {
 
     //指定したインデックスの場所におけるかを確認する
     public static boolean canPut(int[][] board,int x,int y){
-        if(inBoardRange(x, y) && notPlacedAnything(board, x, y)){        //ボードの範囲内かを確認する＋何も置いていない位置か確認する
+        if(inBoardRange(x, y) && notPlacedAnything(board, x, y) && canTurnOverAll(board, x, y)){        //ボードの範囲内かを確認する＋何も置いていない位置か確認する
                 return true;
             }else{
                 return false;
@@ -325,6 +325,18 @@ public class Main {
             }
         }
         return board;
+    }
+
+    //裏返せるか確認(全方向)
+    public static boolean canTurnOverAll(int[][] board,int x,int y){
+        boolean flag = false;
+        String[] enemyDirection = searchChangeDirections(board, x, y);
+        for(String i:enemyDirection){
+            if(i != null && canChangeDirection(board, x, y, i)){
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     public static int nextColor(int oldColor){
