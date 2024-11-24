@@ -24,7 +24,7 @@ public class Main {
 
         outputBoardCUI(board);
 
-        while(true){
+        while(canContinue(board)){
             int nowColor = nextColor;
             if(nextColor == 1){
                 color = "白";
@@ -36,7 +36,7 @@ public class Main {
             int xIndex = place[0];
             int yIndex = place[1];
 
-            if(canPut(board, xIndex, yIndex)){   //今のcanputはひっくり返せる場所か判断できないので追加します 追記追加しました
+            if(canPut(board, xIndex, yIndex,nowColor)){   //今のcanputはひっくり返せる場所か判断できないので追加します 追記追加しました
                 board = changeBoard(board, xIndex, yIndex, nowColor);
                 board = turnOverAll(board, xIndex, yIndex);
 
@@ -48,7 +48,7 @@ public class Main {
     
             outputBoardCUI(board);
         }
-        //sc.close();  while()が完成するまではコメント
+        sc.close();
 
     }
 
@@ -145,17 +145,18 @@ public class Main {
     //xは左から何番目か
     //yは上から何番目か
     public static int[][] changeBoard(int[][] board, int x, int y ,int color){
+        int[][] interimBoard = board;
         switch (color) {
             case 1:
-                board[y][x] = 1;
+                interimBoard[y][x] = 1;
                 break;
             case 2:
-                board[y][x] = 2;
+                interimBoard[y][x] = 2;
                 break;
             default:
                 break;
             }
-        return board;
+        return interimBoard;
     }
 
     //入力された値がボードの範囲内であるか確認する
@@ -180,8 +181,8 @@ public class Main {
     }
 
     //指定したインデックスの場所におけるかを確認する
-    public static boolean canPut(int[][] board,int x,int y){
-        if(inBoardRange(x, y) && notPlacedAnything(board, x, y) && canTurnOverAll(board, x, y)){        //ボードの範囲内かを確認する＋何も置いていない位置か確認する
+    public static boolean canPut(int[][] board,int x,int y,int color){
+        if(inBoardRange(x, y) && notPlacedAnything(board, x, y) && canTurnOverAll(board, x, y,color)){        //ボードの範囲内かを確認する＋何も置いていない位置か確認する
                 return true;
             }else{
                 return false;
@@ -244,8 +245,7 @@ public class Main {
     }
 
     //置いた場所の周りを探索→自分と違うコマがある方向を返す
-    public static String[] searchChangeDirections(int[][] board,int x,int y){
-        int color = board[y][x];
+    public static String[] searchChangeDirections(int[][] board,int x,int y,int color){
         String[] directions = {"ul","up","ur","le","ri","dl","do","dr"};
         String[] enemyDirection = new String[8];
         int index = 0;
@@ -268,8 +268,7 @@ public class Main {
     }
 
     //引数に指定した方向を探索→ひっくり返せるものがあるか
-    public static boolean canChangeDirection(int[][] board,int x,int y,String direction){
-        int color = board[y][x];
+    public static boolean canChangeDirection(int[][] board,int x,int y,String direction,int color){
         int enemyColor;
         if(color == 1){
             enemyColor = 2;
@@ -329,9 +328,11 @@ public class Main {
 
     //裏返す(全方向対応)
     public static int[][] turnOverAll(int[][] board,int x,int y){
-        String[] enemyDirection = searchChangeDirections(board, x, y);
+        int color = board[y][x];
+        String[] enemyDirection = searchChangeDirections(board, x, y,color);
         for(String i:enemyDirection){
-            if(i != null && canChangeDirection(board, x, y, i)){
+            if(i != null && canChangeDirection(board, x, y, i,color)){
+                System.out.println(i);
                 board = changeDirection(board, x, y, i);
             }
         }
@@ -339,12 +340,15 @@ public class Main {
     }
 
     //裏返せるか確認(全方向)
-    public static boolean canTurnOverAll(int[][] board,int x,int y){
+    public static boolean canTurnOverAll(int[][] board,int x,int y,int nowColor){
         boolean flag = false;
-        String[] enemyDirection = searchChangeDirections(board, x, y);
+        String[] enemyDirection = searchChangeDirections(board, x, y,nowColor);
         for(String i:enemyDirection){
-            if(i != null && canChangeDirection(board, x, y, i)){
+            System.out.println(i);
+            if(i != null && canChangeDirection(board, x, y, i,nowColor)){
+                System.out.println(i);
                 flag = true;
+                return flag;
             }
         }
         return flag;
@@ -361,6 +365,13 @@ public class Main {
             System.out.println("oldColorにおかしい数が入ってるよ");
         }
         return newColor;
+    }
+
+    public static boolean canContinue(int[][] board){
+        boolean flag = Arrays.stream(board)         // Stream<int[]> を作成
+        .flatMapToInt(Arrays::stream)             // Stream<int[]> を IntStream に展開
+        .anyMatch(num -> num == 0);               // IntStream 内の要素をチェック 
+        return flag;
     }
 }
 
