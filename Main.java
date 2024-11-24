@@ -12,14 +12,26 @@ public class Main {
     private static final Scanner sc = new Scanner(System.in); // 1箇所で管理
     public static void main(String [] args){
         int nextColor = 1;
+        String color;
         int[][] board = makeBoard(8);
+        if(nextColor == 1){
+            color = "白";
+        }else{
+            color = "黒";
+        }
+
         board = setBoard(board);
 
         outputBoardCUI(board);
 
         while(true){
             int nowColor = nextColor;
-            System.out.println("今は"+nextColor+"のターンです"); //もちろん分かりやすいメッセージに変えます
+            if(nextColor == 1){
+                color = "白";
+            }else{
+                color = "黒";
+            }
+            System.out.println("今は"+color+"のターンです"); //もちろん分かりやすいメッセージに変えます
             int[] place = hearPlace();
             int xIndex = place[0];
             int yIndex = place[1];
@@ -89,6 +101,7 @@ public class Main {
 
     //見やすく表示(作り途中)
     public static void outputBoardCUI(int[][] board){
+        //ターミナルが黒なので白と黒が逆になる
         String white = "●";
         String black= "○";
         String space = ".";
