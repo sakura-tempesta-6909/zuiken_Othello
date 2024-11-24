@@ -34,7 +34,7 @@ public class Main {
                 nextColor = nowColor;   //置けなかったからもう一回
             }
     
-            outputBoard(board);
+            outputBoardCUI(board);
         }
         //sc.close();  while()が完成するまではコメント
 
@@ -91,23 +91,26 @@ public class Main {
     public static void outputBoardCUI(int[][] board){
         String white = "●";
         String black= "○";
-        String space = "・";
+        String space = ".";
 
         for(int[] column:board){
             for(int i:column){
                 switch (i) {
                     case 1:
                         System.out.print(white);
+                        System.out.print(" ");
                         break;
                     case 2:
                         System.out.print(black);
+                        System.out.print(" ");
                         break;
                     case 0:
                         System.out.print(space);
+                        System.out.print(" ");
                     default:
                         break;
                 }
-                System.out.print("　");//横がぎゅうぎゅうになって見にくいから
+                System.out.print(" ");//横がぎゅうぎゅうになって見にくいから
             }
             System.out.println();
         }
