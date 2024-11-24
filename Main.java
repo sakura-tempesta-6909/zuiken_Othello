@@ -36,7 +36,7 @@ public class Main {
             int xIndex = place[0];
             int yIndex = place[1];
 
-            if(canPut(board, xIndex, yIndex)){   //今のcanputはひっくり返せる場所か判断できないので追加します
+            if(canPut(board, xIndex, yIndex)){   //今のcanputはひっくり返せる場所か判断できないので追加します 追記追加しました
                 board = changeBoard(board, xIndex, yIndex, nowColor);
                 board = turnOverAll(board, xIndex, yIndex);
 
@@ -106,7 +106,18 @@ public class Main {
         String black= "○";
         String space = ".";
 
+        int yCoordinate = 1;
+
+        System.out.print("  ");
+        for(int i=1; i<9; i++){
+            System.out.print(i); //x座標のメモリの表示
+            System.out.print("  ");
+        }
+        System.out.println(""); //改行する
         for(int[] column:board){
+            System.out.print(yCoordinate); //y座標のメモリの表示
+            System.out.print(" ");
+            yCoordinate += 1;
             for(int i:column){
                 switch (i) {
                     case 1:
