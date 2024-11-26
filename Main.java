@@ -344,7 +344,7 @@ public class Main {
         boolean flag = false;
         String[] enemyDirection = searchChangeDirections(board, x, y,nowColor);
         for(String i:enemyDirection){
-            System.out.println(i);
+            //System.out.println(i);
             if(i != null && canChangeDirection(board, x, y, i,nowColor)){
                 System.out.println(i);
                 flag = true;
@@ -368,10 +368,18 @@ public class Main {
     }
 
     public static boolean canContinue(int[][] board){
-        boolean flag = Arrays.stream(board)         // Stream<int[]> を作成
-        .flatMapToInt(Arrays::stream)             // Stream<int[]> を IntStream に展開
-        .anyMatch(num -> num == 0);               // IntStream 内の要素をチェック 
-        return flag;
+        for(int x=0;x<8;x++){
+            for(int y=0;y<8;y++){
+                int color = board[y][x];
+                if(color == 0){
+                    boolean canput = canPut(board, x, y, 1)||canPut(board, x, y, 0);
+                    if(canput){
+                        return true;
+                    }
+            }
+        }
+    }
+        return false;
     }
 }
 
