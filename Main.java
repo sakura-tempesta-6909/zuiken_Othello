@@ -47,8 +47,20 @@ public class Main {
             }
     
             outputBoardCUI(board);
+            System.out.println(countColor(board, 2));
         }
         sc.close();
+        int whiteNum = countColor(board, 1);
+        int blackNum = countColor(board, 2);
+        System.out.println("白が"+whiteNum+"個");
+        System.out.println("黒が"+blackNum+"個");
+        if(whiteNum > blackNum){
+            System.out.println("白の勝ち");
+        }else if(whiteNum == blackNum){
+            System.out.println("引き分け");
+        }else{
+            System.out.println("黒の勝ち");
+        }
 
     }
 
@@ -380,6 +392,15 @@ public class Main {
         }
     }
         return false;
+    }
+
+    // 指定された色の個数を数えるメソッド
+    public static int countColor(int[][] board, int color) {
+        return Arrays.stream(board)               // Stream<int[]> を作成
+            .flatMapToInt(Arrays::stream)         // Stream<int[]> を IntStream に変換
+            .filter(num -> num == color)   // 指定された色に一致する要素をフィルタ
+            .map(num -> 1)                        // フィルタされた要素を1に変換
+            .sum();                               // すべての1を加算して個数を取得
     }
 }
 
