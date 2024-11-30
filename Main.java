@@ -33,11 +33,13 @@ public class Main {
                 color = "黒";
             }
 
-            if(canPutSomewhere(board, nextColor)){
+            if(canPutSomewhere(board, nowColor)){     //パスする必要があるか
+                ;   //trueだとパスする必要がないので何もしない
+            }else{
+                //パスする必要がある
                 System.out.println(color+"色はおける場所がないのでパス");
                 nextColor = nextColor(nowColor);
-            }else{
-                continue;
+                continue;  //次のターンへ
             }
 
             System.out.println("今は"+color+"のターンです"); //もちろん分かりやすいメッセージに変えます 追記変えました
@@ -353,7 +355,7 @@ public class Main {
         String[] enemyDirection = searchChangeDirections(board, x, y,color);
         for(String i:enemyDirection){
             if(i != null && canChangeDirection(board, x, y, i,color)){
-                System.out.println(i);
+                //System.out.println(i);
                 board = changeDirection(board, x, y, i);
             }
         }
@@ -367,7 +369,7 @@ public class Main {
         for(String i:enemyDirection){
             //System.out.println(i);
             if(i != null && canChangeDirection(board, x, y, i,nowColor)){
-                System.out.println(i);
+                //System.out.println(i);
                 flag = true;
                 return flag;
             }
