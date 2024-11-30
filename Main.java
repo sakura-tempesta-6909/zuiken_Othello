@@ -34,7 +34,8 @@ public class Main {
             }
 
             if(canPutSomewhere(board, nextColor)){
-                ;
+                System.out.println(color+"色はおける場所がないのでパス");
+                nextColor = nextColor(nowColor);
             }else{
                 continue;
             }
