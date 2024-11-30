@@ -23,6 +23,7 @@ public class Main {
         board = setBoard(board);
 
         outputBoardCUI(board);
+        //System.out.println(countColor(board, 1));
 
         while(canContinue(board)){
             int nowColor = nextColor;
@@ -403,11 +404,10 @@ public class Main {
 
     // 指定された色の個数を数えるメソッド
     public static int countColor(int[][] board, int color) {
-        return Arrays.stream(board)               // Stream<int[]> を作成
-            .flatMapToInt(Arrays::stream)         // Stream<int[]> を IntStream に変換
-            .filter(num -> num == color)   // 指定された色に一致する要素をフィルタ
-            .map(num -> 1)                        // フィルタされた要素を1に変換
-            .sum();                               // すべての1を加算して個数を取得
+        return (int) Arrays.stream(board)             // Stream<int[]> を作成
+        .flatMapToInt(Arrays::stream)             // Stream<int[]> を IntStream に変換
+        .filter(num -> num == color)              // 指定された色に一致する要素をフィルタ
+        .count();                                 // フィルタされた要素の数をカウント
     }
 
     public static boolean canPutSomewhere(int[][] board, int color){
