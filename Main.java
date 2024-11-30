@@ -395,7 +395,7 @@ public class Main {
             for(int y=0;y<8;y++){
                 int color = board[y][x];
                 if(color == 0){
-                    boolean canput = canPut(board, x, y, 1)||canPut(board, x, y, 0);
+                    boolean canput = canPut(board, x, y, 1)||canPut(board, x, y, 2);
                     if(canput){
                         return true;
                     }
