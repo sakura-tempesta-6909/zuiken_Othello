@@ -31,6 +31,13 @@ public class Main {
             }else{
                 color = "黒";
             }
+
+            if(canPutSomewhere(board, nextColor)){
+                ;
+            }else{
+                continue;
+            }
+
             System.out.println("今は"+color+"のターンです"); //もちろん分かりやすいメッセージに変えます 追記変えました
             int[] place = hearPlace();
             int xIndex = place[0];
@@ -401,6 +408,18 @@ public class Main {
             .filter(num -> num == color)   // 指定された色に一致する要素をフィルタ
             .map(num -> 1)                        // フィルタされた要素を1に変換
             .sum();                               // すべての1を加算して個数を取得
+    }
+
+    public static boolean canPutSomewhere(int[][] board, int color){
+        boolean flag = false;
+        for(int x = 0;x<8;x++){
+            for(int y = 0;y<8;y++){
+                if(canPut(board, x, y,color)){
+                    flag = true;
+                }
+            }
+        }
+        return flag;
     }
 }
 
