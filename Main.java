@@ -58,7 +58,7 @@ public class Main {
             }
     
             outputBoardCUI(board);
-            System.out.println(countColor(board, 2));
+            //System.out.println(countColor(board, 2));
         }
         sc.close();
         int whiteNum = countColor(board, 1);
