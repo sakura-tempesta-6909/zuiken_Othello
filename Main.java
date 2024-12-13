@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //空白: 0
@@ -78,9 +79,33 @@ public class Main {
     //座標を入力させる
     public static int[] hearPlace(){
         System.out.print("x = ");
-        int x = sc.nextInt();
+        int x = 0;
+        boolean validInput = false;
+        
+        while (!validInput) {
+            try {
+                x = sc.nextInt(); // 整数の入力を試みる
+                validInput = true; // 入力が成功した場合にループを終了
+            } catch (InputMismatchException e) {
+                System.out.println("エラー: 整数を入力してください。");
+                System.out.print("x = ");
+                sc.next(); // 入力バッファをクリア
+            }
+        }
         System.out.print("y = ");
-        int y = sc.nextInt();
+
+        int y = 0;
+        validInput = false;
+
+        while (!validInput) {
+            try {
+                y = sc.nextInt(); // 整数の入力を試みる
+                validInput = true; // 入力が成功した場合にループを終了
+            } catch (InputMismatchException e) {
+                System.out.println("エラー: 整数を入力してください。");
+                sc.next(); // 入力バッファをクリア
+            }
+        }
 
         int xIndex = x-1;
         int yIndex = y-1;
