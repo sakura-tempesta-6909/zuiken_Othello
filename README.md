@@ -1,6 +1,6 @@
 # zuiken_Othello
 
-SAKURA Tempestaのチーム内で行ったJava講習のまとめとして作ったオセロのコードです。
+SAKURA Tempestaのチーム内で行ったJava講習のまとめとして作ったオセロのコードです。  
 詳しくは広報文を見てください
 
 広報文: https://www.sakura-tempesta.org/blog/ill-make-othello-in-the-software-part-java/
